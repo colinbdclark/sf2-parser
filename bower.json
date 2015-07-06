@@ -1,0 +1,11 @@
+{
+    "name": "sf2-parser",
+    "version": "1.0.0",
+    "main": "dist/sf2-parser.min.js",
+    "ignore": [
+        "tests",
+        "Gruntfile.js",
+        "MIT-LICENSE.txt",
+        "package.json"
+    ]
+}
