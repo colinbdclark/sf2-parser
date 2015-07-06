@@ -13,7 +13,9 @@ How to Use It
 
 1. Load your SoundFont file using XHR's arraybuffer responseType and wrap it as a <code>Uint8Array</code>
 2. Instantiate a new parser instance
-3. Call the <code>parse()</code> method
+3. Call the <code>parse()</code> method to parse the SoundFont file
+4. Use the <code>getPresets()</code> and <code>getInstruments()</code> methods to access preset and instrument data
+5. Sample data is stored in the parser's <code>sample</code> member variable
 
 ### Example Code ###
 
@@ -54,3 +56,11 @@ Summary of Changes from the Original
 * Added boilerplate to support most JS module loaders, including CommonJS, AMD, Node.js and browser globals
 * Added a Grunt-based build process
 * Created Bower and npm packages
+
+To Do
+-----
+
+* Improve the API of the parser by making it stateless
+* Add support for parsing in a Web Worker so that the main browser thread doesn't block
+* Massively extend the unit test coverage
+* Add support for running the unit tests in Node.js
