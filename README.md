@@ -11,9 +11,9 @@ This library is based on the SoundFont 2 parser from [sf2synth.js, a SoundFont S
 How to Use It
 -------------
 
-# Load your SoundFont file using XHR's arraybuffer responseType and wrap it as a <code>Uint8Array</code>
-# Instantiate a new parser instance
-# Call the <code>parse()</code> method
+1. Load your SoundFont file using XHR's arraybuffer responseType and wrap it as a <code>Uint8Array</code>
+2. Instantiate a new parser instance
+3. Call the <code>parse()</code> method
 
 ### Example Code ###
 

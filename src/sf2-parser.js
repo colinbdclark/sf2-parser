@@ -492,9 +492,9 @@
       }
     };
 
-    // TODO: This function is highly suspect, and should be removed
-    // it does no interpolation of the sample data, and always forces
-    // a sample rate of 22050 or higher. Why?
+    // TODO: This function is questionable;
+    // it doesn't interpolate the sample data
+    // and always forces a sample rate of 22050 or higher. Why?
     sf2.Parser.prototype.adjustSampleData = function (sample, sampleRate) {
       /** @type {Int16Array} */
       var newSample;
