@@ -1,7 +1,7 @@
-SoundFont 2 Parser
+SoundFont 2 (and 3) Parser
 ==================
 
-A library for parsing SoundFont (SF2) files in JavaScript.
+A library for parsing SoundFont (SF2, SF3) files in JavaScript.
 
 License and Credits
 -------------------
