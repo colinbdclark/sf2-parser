@@ -457,20 +457,32 @@
         sampleLink = data[ip++] | (data[ip++] << 8);
         sampleType = data[ip++] | (data[ip++] << 8);
 
-        var sample = new Int16Array(new Uint8Array(data.subarray(
-          this.samplingData.offset + start * 2,
-          this.samplingData.offset + end   * 2
-        )).buffer);
+        if (!this.parserOptions.isSf3) {
+          // .sf3 (ogg) uses relative positions for loop
+          // points, whereas .sf2 (wav) uses absolute
+          startLoop -= start;
+          endLoop -= start;
 
-        startLoop -= start;
-        endLoop -= start;
+          // wav offset is specified in it's 2-byte samples
+          // whereas ogg offset is specified just in bytes
+          start *= 2;
+          end *= 2;
+        }
+        var sample = new Int8Array(data.subarray(
+          this.samplingData.offset + start,
+          this.samplingData.offset + end
+        )).buffer;
 
-        if (sampleRate > 0) {
-          var adjust = this.adjustSampleData(sample, sampleRate);
-          sample = adjust.sample;
-          sampleRate *= adjust.multiply;
-          startLoop *= adjust.multiply;
-          endLoop *= adjust.multiply;
+        if (!this.parserOptions.isSf3) {
+            // only possible with .sf2 (wav) since .sf3
+            // (ogg) is not just raw sample values
+            if (sampleRate > 0) {
+              var adjust = this.adjustSampleData(sample, sampleRate);
+              sample = adjust.sample;
+              sampleRate *= adjust.multiply;
+              startLoop *= adjust.multiply;
+              endLoop *= adjust.multiply;
+            }
         }
 
         samples.push(sample);
@@ -987,6 +999,8 @@
       /** @type {number} */
       this.offset = this.ip;
       /** @type {boolean} */
+      this.isSf3 = options.isSf3 !== undefined ? options.isSf3 : true;
+      /** @type {boolean} */
       this.padding = options.padding !== undefined ? options.padding : true;
       /** @type {boolean} */
       this.bigEndian = options.bigEndian !== undefined ? options.bigEndian : false;
@@ -1040,7 +1054,7 @@
       ip += size;
 
       // padding
-      if (this.padding && ((ip - this.offset) & 1) === 1) {
+      if (!this.isSf3 && this.padding && ((ip - this.offset) & 1) === 1) {
         ip++;
       }
 
